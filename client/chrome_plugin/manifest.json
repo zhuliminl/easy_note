@@ -1,16 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "React Content Script",
+  "name": "easy note",
   "version": "1.0.0",
   "action": {
-    "default_title": "Popup",
+    "default_title": "easy_note",
     "default_popup": "index.html",
     "default_icon": "logo192.png"
   },
   "icons": {},
   "content_scripts": [
     {
-      "matches": ["https://blank.org/*"],
+      "matches": ["<all_urls>"],
       "js": ["content-script/src/main.tsx"],
       "media": []
     }

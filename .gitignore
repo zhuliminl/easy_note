@@ -1,2 +1,3 @@
 client/chrome_plugin/node_modules
 .DS_Store
+client/chrome_plugin/content-script
