@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "server"
+		},
+		{
+			"path": "swagger-to-postman"
+		},
+		{
+			"path": "client"
+		}
+  ],
+  "settings": {}
+}

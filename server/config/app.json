@@ -1,0 +1,18 @@
+{
+  "app_name": "word_server",
+  "mysql": {
+    "user": "saul",
+    "address": "123.206.115.75",
+    "port": "3306",
+    "password": "wuther66L#",
+    "database_name": "word",
+    "enable_create": true,
+    "enable_log": false
+  },
+  "redis": {},
+  "wechat": {},
+  "server": {
+    "address": "0.0.0.0",
+    "port": "3500"
+  }
+}

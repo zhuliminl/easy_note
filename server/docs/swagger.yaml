@@ -1,0 +1,268 @@
+definitions:
+  module.ResRegister:
+    properties:
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/module.User'
+    type: object
+  module.ResToken:
+    properties:
+      token:
+        type: string
+    type: object
+  module.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      errors: {}
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  module.Team:
+    properties:
+      creater_id:
+        type: string
+      desc:
+        type: string
+      team_id:
+        type: string
+      title:
+        type: string
+    type: object
+  module.User:
+    properties:
+      email:
+        type: string
+      phone:
+        type: string
+      teams:
+        description: Projects       []Project `json:"projects"`
+        items:
+          $ref: '#/definitions/module.Team'
+        type: array
+      user_id:
+        type: string
+      username:
+        type: string
+      wx_nickname:
+        type: string
+      wx_openid:
+        type: string
+    type: object
+  module.UserLoginByEmail:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  module.UserLoginByPhone:
+    properties:
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
+  module.UserRegisterByEmail:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  module.UserRegisterByPhone:
+    properties:
+      password:
+        type: string
+      phone:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - phone
+    type: object
+info:
+  contact:
+    email: support@fit2cloud.com
+    name: Fit2cloud Support
+    url: https://www.fit2cloud.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://kubeoperator.io
+  title: Word Restful API
+paths:
+  /auth/loginByEmail:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 登录
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/module.UserLoginByEmail'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户信息和 token
+          schema:
+            allOf:
+            - $ref: '#/definitions/module.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/module.ResToken'
+              type: object
+      summary: 通过邮箱登录
+      tags:
+      - auth
+  /auth/loginByPhone:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 登录
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/module.UserLoginByPhone'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户信息和 token
+          schema:
+            allOf:
+            - $ref: '#/definitions/module.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/module.ResRegister'
+              type: object
+      summary: 通过手机号登录
+      tags:
+      - auth
+  /auth/registerByEmail:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 注册
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/module.UserRegisterByEmail'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户信息和 token
+          schema:
+            allOf:
+            - $ref: '#/definitions/module.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/module.ResRegister'
+              type: object
+      summary: 通过邮箱注册
+      tags:
+      - auth
+  /auth/registerByPhone:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 注册
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/module.UserRegisterByPhone'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户信息和 token
+          schema:
+            allOf:
+            - $ref: '#/definitions/module.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/module.ResRegister'
+              type: object
+      summary: 通过手机注册
+      tags:
+      - auth
+  /user/getMyInfo:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户信息
+          schema:
+            allOf:
+            - $ref: '#/definitions/module.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/module.User'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取自己的用户信息
+      tags:
+      - user
+  /user/getUserByUserId:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户 userId
+        in: query
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户信息
+          schema:
+            allOf:
+            - $ref: '#/definitions/module.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/module.User'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户信息
+      tags:
+      - user
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: token
+    type: apiKey
+swagger: "2.0"

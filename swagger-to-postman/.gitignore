@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+
+# dependencies
+/node_modules
+
+# local secrets
+.DC_Store
+collection.json
