@@ -1,6 +1,7 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import svgr from "vite-plugin-svgr";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
+import path from 'path';
 // import { crx } from "@crxjs/vite-plugin";
 // import manifest from "./manifest.json";
 
@@ -17,4 +18,10 @@ export default defineConfig({
     // Build Chrome Extension
     // crx({ manifest }),
   ],
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, './src'),
+      // '~': path.join(__dirname, 'src/'),
+    },
+  },
 });

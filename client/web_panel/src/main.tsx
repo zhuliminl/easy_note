@@ -6,7 +6,8 @@ const body = document.querySelector("body");
 
 const app = document.createElement("div");
 
-app.id = "root";
+const appName = 'easy_note'
+app.id =appName
 
 // Make sure the element that you want to mount the app to has loaded. You can
 // also use `append` or insert the app using another method:
@@ -18,8 +19,8 @@ if (body) {
   body.prepend(app);
 }
 
-const container = document.getElementById("root");
-const root = createRoot(container!);
+const container = document.getElementById(appName);
+const root = createRoot(container!)
 
 root.render(
   <React.StrictMode>

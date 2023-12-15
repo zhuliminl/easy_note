@@ -1,0 +1,10 @@
+
+#easy_note {
+  top: 0px;
+  right: 0px;
+  position: fixed;
+  z-index: 999;
+}
+
+.App {
+}
