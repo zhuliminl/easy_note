@@ -10,8 +10,13 @@
   "icons": {},
   "content_scripts": [
     {
-      "matches": ["https://www.baidu.com/*"],
-      "js": ["content-script/src/main.tsx"]
+      "matches": [
+        "https://www.baidu.com/*",
+        "https://www.jianshu.com/*"
+      ],
+      "js": [
+        "content-script/src/main.tsx"
+      ]
     }
   ]
 }
