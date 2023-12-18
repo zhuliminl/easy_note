@@ -6,8 +6,10 @@ export default () => {
   const Theme = useTheme();
   const updatePosition = useUpdateDockPosition();
   const dockPosition = useDockPosition();
+  // const
   return (
     <div
+      onMouseEnter={() => {}}
       onClick={() => {
         updatePosition({ right: 200, top: 90 });
       }}
