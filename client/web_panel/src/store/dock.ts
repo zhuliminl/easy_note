@@ -1,4 +1,20 @@
-import { create } from 'zustand';
+import { create, StoreApi, UseBoundStore } from 'zustand';
+
+type WithSelectors<S> = S extends { getState: () => infer T }
+  ? S & { use: { [K in keyof T]: () => T[K] } }
+  : never;
+
+const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
+  _store: S,
+) => {
+  let store = _store as WithSelectors<typeof _store>;
+  store.use = {};
+  for (let k of Object.keys(store.getState())) {
+    (store.use as any)[k] = () => store((s) => s[k as keyof typeof s]);
+  }
+
+  return store;
+};
 
 interface Position {
   right: number;
@@ -18,7 +34,7 @@ interface DockState {
   setIsHover: (flag: boolean) => void;
 }
 
-const useDockStore = create<DockState>((set) => ({
+const useDockStoreBase = create<DockState>((set) => ({
   isExpand: false,
   isDraging: false,
   isHover: false,
@@ -54,16 +70,17 @@ const useDockStore = create<DockState>((set) => ({
   },
 }));
 
-export const useInitDock = () => useDockStore().initDock;
-export const useToggleDockExpand = () => useDockStore().toggleExpand;
-export const useDockIsExpand = () => useDockStore().isExpand;
+export const useDockStore = createSelectors(useDockStoreBase);
+export const useInitDock = () => useDockStoreBase().initDock;
+export const useToggleDockExpand = () => useDockStoreBase().toggleExpand;
+export const useDockIsExpand = () => useDockStoreBase().isExpand;
 
 export const useDockPosition = () => {
-  const store = useDockStore();
+  const store = useDockStoreBase();
   return {
     toRight: store.toRight,
     toTop: store.toTop,
   };
 };
 
-export const useUpdateDockPosition = () => useDockStore().updatePosition;
+export const useUpdateDockPosition = () => useDockStoreBase().updatePosition;

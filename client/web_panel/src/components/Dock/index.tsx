@@ -1,15 +1,25 @@
 import React from 'react';
-import { useDockPosition, useUpdateDockPosition } from '~/store/dock';
+import {
+  useDockPosition,
+  useDockStore,
+  useUpdateDockPosition,
+} from '~/store/dock';
 import { useTheme } from '~/store/theme';
 
 export default () => {
   const Theme = useTheme();
   const updatePosition = useUpdateDockPosition();
   const dockPosition = useDockPosition();
-  // const
+  const setIsHover = useDockStore.use.setIsHover();
+  const isHover = useDockStore.use.isHover();
   return (
     <div
-      onMouseEnter={() => {}}
+      onMouseEnter={() => {
+        setIsHover(true);
+      }}
+      onMouseLeave={() => {
+        setIsHover(false);
+      }}
       onClick={() => {
         updatePosition({ right: 200, top: 90 });
       }}
@@ -17,7 +27,9 @@ export default () => {
         position: 'fixed',
         width: Theme.Sizes.dockWidth,
         height: Theme.Sizes.dockWidth,
-        backgroundColor: Theme.Colors.primary,
+        backgroundColor: isHover
+          ? Theme.Colors.secondary
+          : Theme.Colors.primary,
         borderRadius: Theme.Sizes.dockWidth / 2,
         top: dockPosition.toTop,
         right: dockPosition.toRight,
