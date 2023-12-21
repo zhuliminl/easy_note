@@ -7,9 +7,9 @@ function App() {
   const Theme = useTheme();
   return (
     <div className="App">
-      <Routes />
-      {/* 启动栏 */}
-      <Dock />
+      <Dock>
+        <Routes />
+      </Dock>
     </div>
   );
 }

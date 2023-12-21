@@ -1,10 +1,17 @@
-
 #easy_note {
-  top: 0px;
+  /* top: 0px;
   right: 0px;
   position: fixed;
-  z-index: 999;
+  z-index: 999; */
 }
 
 .App {
+}
+
+.react-draggable,
+.cursor {
+  cursor: move;
+}
+.no-cursor {
+  cursor: auto;
 }

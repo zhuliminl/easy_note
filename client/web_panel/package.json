@@ -13,13 +13,13 @@
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.6",
     "react-router-dom": "^6.21.0",
     "sort-by": "^1.2.0",
     "web-vitals": "^3.0.3",
     "zustand": "^4.3.6"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "@crxjs/vite-plugin@2.0.0-beta.11",
     "@types/chrome": "^0.0.197",
     "@types/node": "^18.8.3",
     "@types/react": "^18.0.17",
