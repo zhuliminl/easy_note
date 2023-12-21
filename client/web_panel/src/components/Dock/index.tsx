@@ -1,37 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   useDockPosition,
   useDockStore,
   useUpdateDockPosition,
 } from '~/store/dock';
 import { useTheme } from '~/store/theme';
-import Draggable from 'react-draggable';
+import Draggable, { ControlPosition } from 'react-draggable';
+import { useLocalStorage } from 'usehooks-ts';
 
 type IProps = {
   children: React.ReactNode;
 };
 
 export default ({ children }: IProps) => {
+  const [localDockPosition, setLocalDockPosition] = useLocalStorage(
+    'default_dock_position',
+    { x: 0, y: 0 },
+  );
+  console.log('sual fuck', localDockPosition);
+
+  const [dockPosition, setDockPosition] = useState<ControlPosition>({
+    x: localDockPosition.x,
+    y: localDockPosition.y,
+  });
+
   const Theme = useTheme();
-  const updatePosition = useUpdateDockPosition();
-  const dockPosition = useDockPosition();
   const setIsHover = useDockStore.use.setIsHover();
   const isHover = useDockStore.use.isHover();
   const dockId = 'easy_note_dock';
+
   return (
     <Draggable
       handle={`#${dockId}`}
-      // 默认值需要存在本地
-      defaultPosition={{ x: -25, y: 25 }}
-      // position={{}}
-      onStart={() => {}}
-      onDrag={() => {}}
-      onStop={() => {}}>
+      position={dockPosition}
+      onStart={(e) => {}}
+      onDrag={(e, ui) => {
+        setDockPosition({ x: ui.x, y: ui.y });
+      }}
+      onStop={(e, ui) => {
+        console.log('saul ui', ui);
+        setLocalDockPosition({ x: ui.x, y: ui.y });
+      }}>
       <div
         style={{
           position: 'fixed',
-          top: 30,
-          right: 30,
+          top: 0,
+          right: 0,
           zIndex: 9999999,
         }}>
         {/* dock  */}
@@ -53,7 +67,9 @@ export default ({ children }: IProps) => {
               ? Theme.Colors.secondary
               : Theme.Colors.primary,
             borderRadius: Theme.Sizes.dockWidth / 2,
-          }}></div>
+          }}>
+          {JSON.stringify(dockPosition)}
+        </div>
         {/* 程序主体 */}
         <div
           className="no-cursor"
